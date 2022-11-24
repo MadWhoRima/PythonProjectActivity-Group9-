@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-
+#sneha mISHRA
 class DataManipulation:
 
     def data_modify(decoded_data):
