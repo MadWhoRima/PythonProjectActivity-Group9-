@@ -36,11 +36,12 @@ class DataProcessing:
     def sendmails_minbal_accounts(modifiedData):
         try:
          #Finding latest transaction for account ID
-         filtered_data = modifiedData.groupby('account_id').apply(
-             lambda df: df.sort_values(by='fulldatewithtime', ascending=False).iloc[0, :])[['account_id', 'balance', '']]
+         filtered_data = modifiedData.groupby('account_id').apply(lambda df: df.sort_values(by='fulldatewithtime', ascending=False).iloc[0, :])[['account_id', 'balance']]
          df = filtered_data[filtered_data.balance < 800]
+         mails_count=len(df)
 
          #Sending mails to min bal accounts
          df.apply(EmailFeature.sending_mail, axis=1)
+         print("Sent mails to low balance accounts - "+str(mails_count))
         except:
-            print("Error in sending alert mails")
+           print("Error in sending alert mails to low balance accounts")

@@ -9,12 +9,8 @@ to_emailID='testmailpythonpro@gmail.com'
 class EmailFeature:
 
     def sending_mail(df):
-        try:
          acc_num=df.account_id
          balance=str(df.balance)
-
-         df.apply(EmailFeature.sending_mail, axis=1)
-         df.query("TransactionType == 'Cash'").iloc[0,:][['account_id','balance', '']]
 
          end_date = str(date.today() + timedelta(days=10))
 
@@ -29,6 +25,5 @@ class EmailFeature:
 
          smtpObj.sendmail(from_emailID, to_emailID, message_body)
          smtpObj.quit()
-        except:
-         print("Error in sending mails to accounts")
+
 
