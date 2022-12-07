@@ -17,7 +17,7 @@ def main_execution(name):
     DataProcessing.find_maxcashtransactions(final_data)
 
     #Sending alert emails to min account balance holders
-    #DataProcessing.sendmails_minbal_accounts(final_data)
+    DataProcessing.sendmails_minbal_accounts(final_data)
 
     #Pensioner flag
     DataTransformation.pensioner_update(final_data)

@@ -5,8 +5,8 @@ modifiedfile_path='CSVFiles/transaction_data_decoded.csv'
 transaction_flag='Transaction ID is duplicate!'
 suspicious_flag=' Suspicious transaction '
 
-arr_digital = ["Remittance to Another Bank"]
-arr_cash = ["Cash Withdrawal", "Credit in Cash", "Credit Card Withdrawal", "Collection from Another Bank"]
+arr_digital = ["Remittance to Another Bank", "Collection from Another Bank"]
+arr_cash = ["Cash Withdrawal", "Credit in Cash", "Credit Card Withdrawal"]
 categories = ['Digital', 'Cash']
 
 class DataManipulation:
