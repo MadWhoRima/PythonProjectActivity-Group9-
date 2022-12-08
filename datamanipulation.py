@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 
-modifiedfile_path='CSVFiles/transaction_data_decoded.csv'
+modifiedfile_path= 'csv_files/transaction_data_decoded.csv'
 transaction_flag='Transaction ID is duplicate!'
 suspicious_flag=' Suspicious transaction '
 
@@ -21,8 +21,8 @@ class DataManipulation:
          #Removing entire columns if all column values are null
          temp_data = modified_data.replace('', np.nan)
          for col in temp_data.columns:
-             x = pd.DataFrame(temp_data[col])
-             if (x.isna().all().bool()):
+             temp_col_data = pd.DataFrame(temp_data[col])
+             if (temp_col_data.isna().all().bool()):
                  modified_data.drop(col, axis=1, inplace=True)
 
          return DataManipulation.flag_assign(modified_data)
@@ -31,24 +31,21 @@ class DataManipulation:
 
     def flag_assign(modified_data):
         try:
-         # Duplicating data
+         # Duplicating data to test
          modified_data.loc[len(modified_data)] = [1056320, "T00695247", "A00002378", "Credit", " ", 700.0, 700.0, '', '', '', 2013, 1, 1, '2013-01-01','11:02:40', '2013-01-01T11:02:40']
          modified_data.loc[len(modified_data)] = [1056321,"T00695247","A00002378","Credit"," ",500.0,500.0,'Old Age Pension','Bank of America','',2022,1,1,'2022-01-01','11:02:41','2022-01-01T11:02:41']
 
-         # Adding cash or digital types based on operation
+         # Adding cash or digital types based on operation and NAN if operaton is null
          modified_data = DataManipulation.transaction_types(modified_data);
 
-         #finding transaction duplicate data
-         #modified_data['Flag'] = np.where(modified_data['trans_id'].duplicated(), transaction_flag,  '')
+         #finding duplicated trx data
          trans_id_list = np.where(modified_data['trans_id'].duplicated(), modified_data['trans_id'], 'Not Applicable')
          modified_data['Flag']=''
 
          #Updating flag for duplicate trx
          modified_data = DataManipulation.update_flag(modified_data, trans_id_list, transaction_flag)
 
-         #Suspicious transactions
-         #modified_data=DataManipulation.flag_concat(modified_data, "operation", " Suspicious transaction " )
-         #trans_id_list = np.where(modified_data['operation'] == ' ', modified_data['trans_id'], "Not Applicable")
+         #suspicious transactions
          modified_data['Flag'] = np.where(modified_data['TransactionType'] == 'nan',
                                          modified_data['Flag'] + suspicious_flag, modified_data['Flag'])
 
@@ -64,7 +61,7 @@ class DataManipulation:
          modified_data.to_csv(file_name, index=False)
          return True
         except:
-            print("Error in transaforming data to csv file")
+            print("Error in transforming data to csv file")
 
     def transaction_types(modified_data):
         try:

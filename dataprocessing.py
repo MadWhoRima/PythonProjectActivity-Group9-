@@ -1,9 +1,9 @@
 import pandas as pd
 
-from DataManipulation import DataManipulation
-from ExternalCode.EmailFeature import EmailFeature
+from datamanipulation import DataManipulation
+from reusable_entities.emailfeature import EmailFeature
 
-modifiedfile_path='CSVFiles/Cash_transactions_data.csv'
+modifiedfile_path= 'csv_files/cash_transactions_data.csv'
 transaction_type='Cash'
 
 class DataProcessing:
@@ -11,12 +11,12 @@ class DataProcessing:
     def find_maxcashtransactions(modifiedData):
         try:
          #Filtering data based on cash for every year
-         Cashtrxyearly_df = modifiedData.query("TransactionType == '"+transaction_type+"'").groupby('year')
-         cash_df=Cashtrxyearly_df.size()
+         cashtrx_yearly_df = modifiedData.query("TransactionType == '"+transaction_type+"'").groupby('year')
+         cash_df=cashtrx_yearly_df.size()
          cash_df=pd.DataFrame({'Year': cash_df.index, 'No. of transactions': cash_df.values})
 
          #Finding transaction type done the most
-         cash_trxtype=Cashtrxyearly_df.apply(DataProcessing.max_cash_operationtype)
+         cash_trxtype=cashtrx_yearly_df.apply(DataProcessing.max_cash_operationtype)
          cash_trxtype=pd.DataFrame({'Year': cash_trxtype.index, 'Preferred transaction type': cash_trxtype.values})
 
          #Merging the dataframes
@@ -24,7 +24,7 @@ class DataProcessing:
 
          #Transforming the data to CSV
          if(DataManipulation.transform_to_csv(final_df, modifiedfile_path)):
-             print("Created Cash_transactions_data csv file")
+             print("Created cash_transactions_data csv file")
         except:
             print("Error in finding max cash transactions")
 
@@ -37,11 +37,11 @@ class DataProcessing:
         try:
          #Finding latest transaction for account ID
          filtered_data = modifiedData.groupby('account_id').apply(lambda df: df.sort_values(by='fulldatewithtime', ascending=False).iloc[0, :])[['account_id', 'balance']]
-         df = filtered_data[filtered_data.balance < 800]
-         mails_count=len(df)
+         balance_accts_df = filtered_data[filtered_data.balance < 800]
+         mails_count=len(balance_accts_df)
 
          #Sending mails to min bal accounts
-         df.apply(EmailFeature.sending_mail, axis=1)
+         balance_accts_df.apply(EmailFeature.sending_mail, axis=1)
          print("Sent mails to low balance accounts - "+str(mails_count))
         except:
            print("Error in sending alert mails to low balance accounts")

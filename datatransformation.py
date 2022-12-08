@@ -1,9 +1,9 @@
 import numpy as np
 import pandas as pd
 
-from DataManipulation import DataManipulation
+from datamanipulation import DataManipulation
 
-modifiedfile_path='CSVFiles/bonus_to_pensioners.csv'
+modifiedfile_path= 'csv_files/bonus_to_pensioners.csv'
 bank_name='Bank of America'
 category='Old Age Pension'
 interest_rate=5
@@ -39,14 +39,13 @@ class DataTransformation:
          df = df.reset_index()
          df.columns = ['bank', 'TransactionType', 'TypeCount']
 
-         #Findind ratio for all banks
+         #Finding ratio for all banks
          bank_ratio=df.groupby(['bank']).apply(DataTransformation.trxtypes_ratio)
          bankratio_df=pd.DataFrame({'BankName': bank_ratio.index, 'RatioCount': bank_ratio.values})
 
          #Finding max ratio and bank with max ratio
          max_ratio=max(bankratio_df.loc[:, "RatioCount"])
-         condition=bankratio_df["RatioCount"]==max_ratio
-         max_ratio_index = bankratio_df.index[condition].values[0]
+         max_ratio_index = bankratio_df.index[bankratio_df["RatioCount"]==max_ratio].values[0]
          bank_with_maxratio=bankratio_df.at[max_ratio_index,'BankName']
 
          print(bank_with_maxratio+" with "+str(max_ratio))
@@ -56,12 +55,12 @@ class DataTransformation:
     def trxtypes_ratio(df):
         trxtypes_list = df['TransactionType'].values
 
-        # Checking if transaction type hs both cash and digital trxs for a bank
+        # Checking if transaction type has both cash and digital trxs for a bank
         if len(trxtypes_list) == 2:
             Cash_trxCount = df[df.TransactionType == 'Cash'].TypeCount.values[0]
             Digital_trxCount = df[df.TransactionType == 'Digital'].TypeCount.values[0]
             ratio = Digital_trxCount / Cash_trxCount
-        # If one of the value is missing then finding ration with existing type
+        #When one of the value is missing then finding ratio with existing type
         elif len(trxtypes_list) == 1:
             type_value = trxtypes_list[0]
 
