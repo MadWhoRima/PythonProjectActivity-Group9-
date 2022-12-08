@@ -1,11 +1,11 @@
 import uu
 
-from DataManipulation import DataManipulation
-from DataTransformation import DataTransformation
-from DataProcessing import DataProcessing
+from datamanipulation import DataManipulation
+from datatransformation import DataTransformation
+from dataprocessing import DataProcessing
 
-sourcefile_path="./CSVFiles/transaction_data_encoded"
-decodedfile_path="./CSVFiles/transaction_data_decoded.csv"
+sourcefile_path= "csv_files/transaction_data_encoded"
+decodedfile_path= "csv_files/transaction_data_decoded.csv"
 
 def main_execution(name):
 
@@ -25,7 +25,6 @@ def main_execution(name):
     #Max Cash ratio
     DataTransformation.digital_cash_ratio(final_data)
 
-    print(f'Hi, {name}')
 
 
 if __name__ == '__main__':
