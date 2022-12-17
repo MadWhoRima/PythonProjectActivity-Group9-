@@ -7,25 +7,28 @@ from dataprocessing import DataProcessing
 sourcefile_path= "csv_files/transaction_data_encoded"
 decodedfile_path= "csv_files/transaction_data_decoded.csv"
 
-def main_execution(name):
+def main_execution():
 
     #Decoding file
     uu.decode(sourcefile_path, decodedfile_path)
-    final_data = DataManipulation.data_modify(decodedfile_path)
+
+    datamanipulation_obj=DataManipulation()
+    final_data = datamanipulation_obj.data_modify(decodedfile_path)
 
     #Finding Max transactions
-    DataProcessing.find_maxcashtransactions(final_data)
+    dataprocessing_obj=DataProcessing()
+    dataprocessing_obj.find_maxcashtransactions(final_data)
 
     #Sending alert emails to min account balance holders
-    DataProcessing.sendmails_minbal_accounts(final_data)
+    dataprocessing_obj.sendmails_minbal_accounts(final_data)
 
     #Pensioner flag
-    DataTransformation.pensioner_update(final_data)
+    dataprocessing_obj=DataTransformation()
+    dataprocessing_obj.pensioner_update(final_data)
 
     #Max Cash ratio
-    DataTransformation.digital_cash_ratio(final_data)
-
+    dataprocessing_obj.digital_cash_ratio(final_data)
 
 
 if __name__ == '__main__':
-    main_execution('PyCharm')
+    main_execution()
