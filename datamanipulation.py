@@ -4,8 +4,10 @@ import numpy as np
 class DataManipulation:
 
     def __init__(self, modifiedfile_path_param= 'csv_files/transaction_data_decoded.csv',transaction_flag_param='Transaction ID is duplicate!',
-                 suspicious_flag_param=' Suspicious transaction ', arr_digital_param = ["Remittance to Another Bank", "Collection from Another Bank", ],
-                 arr_cash_param=["Cash Withdrawal", "Credit in Cash", "Credit Card Withdrawal"], categories_param = ['Digital', 'Cash']):
+                 suspicious_flag_param=' Suspicious transaction ',
+                 arr_digital_param = ["Collection from Another Bank", "Remittance to Another Bank"],
+                 arr_cash_param=["Cash Withdrawal", "Credit in Cash", "Credit Card Withdrawal"],
+                 categories_param = ['Digital', 'Cash']):
         self.modifiedfile_path=modifiedfile_path_param
         self.transaction_flag=transaction_flag_param
         self.suspicious_flag=suspicious_flag_param
@@ -21,6 +23,9 @@ class DataManipulation:
          modified_data = data.fillna(" ")
          modified_data['sample_nullcol']=''
 
+         #Creating sample csv for testcoverage
+         self.transform_to_csv(modified_data, 'csv_files/tests/transaction_data_decoded_test.csv')
+
          #Removing entire columns if all column values are null
          temp_data = modified_data.replace('', np.nan)
          for col in temp_data.columns:
@@ -30,7 +35,7 @@ class DataManipulation:
 
          return self.flag_assign(modified_data)
         except Exception as err:
-            print("Error in data modifying - ", err)
+           print("Error in data modifying - ", err)
 
     def flag_assign(self, modified_data):
         try:
@@ -64,7 +69,7 @@ class DataManipulation:
          modified_data.to_csv(file_name, index=False)
          return True
         except Exception as err:
-            print("Error in transforming data to csv file", err)
+            print("Error in transforming data to csv file - ", err)
 
     def transaction_types(self, modified_data):
         try:
