@@ -20,14 +20,14 @@ def main_execution():
     dataprocessing_obj.find_maxcashtransactions(final_data)
 
     #Sending alert emails to min account balance holders
-    dataprocessing_obj.sendmails_minbal_accounts(final_data)
+    #dataprocessing_obj.sendmails_minbal_accounts(final_data)
 
     #Pensioner flag
-    dataprocessing_obj=DataTransformation()
-    dataprocessing_obj.pensioner_update(final_data)
+    datatransformation_obj=DataTransformation()
+    datatransformation_obj.pensioner_update(final_data)
 
     #Max Cash ratio
-    dataprocessing_obj.digital_cash_ratio(final_data)
+    datatransformation_obj.digital_cash_ratio(final_data)
 
 
 if __name__ == '__main__':

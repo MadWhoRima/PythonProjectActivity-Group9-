@@ -3,7 +3,8 @@ import pandas as pd
 from datamanipulation import DataManipulation
 from reusable_entities.emailfeature import EmailFeature
 
-class DataProcessing:
+class DataProcessing(DataManipulation):
+
     def __init__(self, trxtype_param='Cash', min_balance_param=800, modifiedfile_path_param='csv_files/cash_transactions_data.csv'):
         self.transaction_type = trxtype_param
         self.min_balance = min_balance_param
@@ -11,8 +12,6 @@ class DataProcessing:
 
     def find_maxcashtransactions(self, modifiedData):
         try:
-         datamanipulation_obj = DataManipulation()
-
          #Filtering data based on cash for every year
          cashtrx_yearly_df = modifiedData.query("TransactionType == '"+self.transaction_type+"'").groupby('year')
          cash_df=cashtrx_yearly_df.size()
@@ -26,7 +25,7 @@ class DataProcessing:
          final_df=pd.merge(cash_df,cash_trxtype, on='Year')
 
          #Transforming the data to CSV
-         if(datamanipulation_obj.transform_to_csv(final_df, self.modifiedfile_path)):
+         if(self.transform_to_csv(final_df, self.modifiedfile_path)):
              print("Created "+ self.modifiedfile_path +" file")
         except Exception as err:
             print("Error in finding max cash transactions - ", err)
