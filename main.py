@@ -12,6 +12,7 @@ def main_execution():
     #Decoding file
     uu.decode(sourcefile_path, decodedfile_path)
 
+    #Assigning flags
     datamanipulation_obj=DataManipulation()
     final_data = datamanipulation_obj.data_modify(decodedfile_path)
 
@@ -26,7 +27,7 @@ def main_execution():
     datatransformation_obj=DataTransformation()
     datatransformation_obj.pensioner_update(final_data)
 
-    #Max Cash ratio
+    #Max Digital/Cash ratio
     datatransformation_obj.digital_cash_ratio(final_data)
 
 

@@ -12,7 +12,7 @@ class DataProcessing(DataManipulation):
 
     def find_maxcashtransactions(self, modifiedData):
         try:
-         #Filtering data based on cash for every year
+         #Filtering data based on cash for each year
          cashtrx_yearly_df = modifiedData.query("TransactionType == '"+self.transaction_type+"'").groupby('year')
          cash_df=cashtrx_yearly_df.size()
          cash_df=pd.DataFrame({'Year': cash_df.index, 'No. of transactions': cash_df.values})
