@@ -20,7 +20,7 @@ def main_execution():
     dataprocessing_obj.find_maxcashtransactions(final_data)
 
     #Sending alert emails to min account balance holders
-    #dataprocessing_obj.sendmails_minbal_accounts(final_data)
+    dataprocessing_obj.sendmails_minbal_accounts(final_data)
 
     #Pensioner flag
     datatransformation_obj=DataTransformation()

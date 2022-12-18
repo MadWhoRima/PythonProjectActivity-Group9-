@@ -65,14 +65,7 @@ class DataTransformation(DataManipulation):
             Cash_trxCount = df[df.TransactionType == 'Cash'].TypeCount.values[0]
             Digital_trxCount = df[df.TransactionType == 'Digital'].TypeCount.values[0]
             ratio = Digital_trxCount / Cash_trxCount
-        #When one of the value is missing then finding ratio with existing type
+        #When one of the trx type is missing then ratio is 0
         elif len(trxtypes_list) == 1:
-            type_value = trxtypes_list[0]
-
-            if type_value == 'Digital':
-                digital_Count = df[df.TransactionType == type_value].TypeCount.values[0]
-                ratio = 0
-            else:
-                cash_Count = df[df.TransactionType == type_value].TypeCount.values[0]
-                ratio = 0
+            ratio=0
         return ratio
